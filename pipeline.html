@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Basics of NLP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
+    <script src="https://unpkg.com/function-plot/dist/function-plot.js"></script>
+    <style>
+        .function-plot .tick text {
+            fill: white !important;
+            font-size: 18px !important;
+        }
+        .function-plot .axis-label {
+            fill: white !important;
+            font-size: 20px !important;
+        }
+        .function-plot .axis path,
+        .function-plot .axis line {
+            stroke: white !important;
+        }
+        .function-plot .grid line {
+            stroke: #444 !important;
+            stroke-opacity: 0.7 !important;
+        }
+        code, pre, pre code, [class*="language-"] {
+            max-height: 100vh !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+<!-- Part 0: Title Slide -->
+<section data-transition="fade">
+  <h1 class="r-fit-text">Give Me 1 Hour, You Will MASTER NLP Pipelines</h1>
+  <h2 class="r-fit-text">From Raw Text to Intelligent Behavior</h2>
+  <blockquote style="font-size:1.5em; color:#4CAF50;">
+    You’ve Been Learning NLP Completely Backwards
+  </blockquote>
+</section>
+
+<!-- Slide 1: Intro -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Introduction</h2>
+  <ul style="font-size:1.5em;">
+    <li>“NLP understands language.” ❌</li>
+    <li>“Transformers read text.” ❌</li>
+    <li>“LLMs know what words mean.” ❌</li>
+  </ul>
+  <p style="font-size:1.5em;">NLP is a <strong>pipeline</strong> of transformations: <em>text → numbers → decisions</em>.</p>
+</section>
+
+<!-- Slide 2: The Core Problem -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Part 1: The Core Problem</h2>
+  <p style="font-size:1.5em;">
+    Computers see:
+  </p>
+  <pre style="font-size:1.5em;">
+"I", " ", "l", "o", "v", "e", " ", "c", "a", "t", "s"
+  </pre>
+  <p style="font-size:1.5em; color:#4CAF50;">
+    There is no meaning. Only symbols.
+  </p>
+</section>
+
+<!-- Slide 3: Tokenization -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Part 2: Tokenization</h2>
+  <p style="font-size:1.5em;">Breaking text into atomic pieces:</p>
+  <pre style="font-size:1.5em;">
+"I love neural networks"
+
+Word-based:    ["I", "love", "neural", "networks"]
+Subword-based: ["I", "love", "neur", "al", "network", "s"]
+Character:     ["I"," ","l","o","v","e",...]
+  </pre>
+  <p style="font-size:1.5em; color:#4CAF50;">
+    Subwords solve unknown words + vocabulary explosion.
+  </p>
+</section>
+
+<!-- Slide 4: Vocabulary & IDs -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Part 3: Vocabulary & IDs</h2>
+  <p style="font-size:1.5em;">Words → integers:</p>
+  <pre style="font-size:1.5em;">
+"I"        → 17
+"love"     → 2031
+"neural"   → 9124
+"networks" → 4512
+
+Sentence → [17, 2031, 9124, 4512]
+  </pre>
+  <p style="font-size:1.5em; color:#4CAF50;">Zero meaning yet — just numeric IDs.</p>
+</section>
+
+<!-- Slide 5: Embeddings -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Part 4: Embeddings</h2>
+  <p style="font-size:1.5em;">Words → high-dimensional vectors:</p>
+  <pre style="font-size:1.5em;">
+"cat" → [0.21, -1.03, 0.77, ..., 0.12]
+  </pre>
+  <p style="font-size:1.5em; color:#4CAF50;">
+    Similar words → close in vector space.
+  </p>
+</section>
+
+<!-- Slide 6: Embedding Lookup -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Embedding Layer = Lookup Table</h2>
+  <pre style="font-size:1.5em;">
+[17, 2031, 9124, 4512]
+↓
+[
+  v("I"),
+  v("love"),
+  v("neural"),
+  v("networks")
+]
+  </pre>
+</section>
+
+<!-- Slide 7: Positional Information -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Part 5: Position Matters</h2>
+  <p style="font-size:1.5em;">Order of words changes meaning:</p>
+  <ul style="font-size:1.5em;">
+    <li>"Dog bites man" ≠ "Man bites dog"</li>
+  </ul>
+  <p style="font-size:1.5em;">Add positional embeddings:</p>
+  <pre style="font-size:1.5em;">
+final_embedding = word_embedding + position_embedding
+  </pre>
+</section>
+
+<!-- Slide 8: Feature Extraction -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Part 6: Feature Extraction</h2>
+  <p style="font-size:1.5em;">Pipeline so far:</p>
+  <pre style="font-size:1.5em;">
+Text → Tokens → IDs → Embeddings → Position-aware vectors
+  </pre>
+  <p style="font-size:1.5em;">Old NLP: handcrafted features (POS, NER, dependency parsing)</p>
+  <p style="font-size:1.5em; color:#4CAF50;">Modern NLP: end-to-end learning via self-attention.</p>
+</section>
+
+<!-- Slide 9: Attention -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Part 7: Attention</h2>
+  <p style="font-size:1.5em;">Each word asks:</p>
+  <blockquote style="font-size:1.5em; color:#4CAF50;">
+    "Which other words should I pay attention to?"
+  </blockquote>
+  <pre style="font-size:1.5em;">
+Attention(Q,K,V) = softmax(QKᵀ / √d) V
+  </pre>
+</section>
+
+<!-- Slide 10: Transformers -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Part 8: Transformers</h2>
+  <ul style="font-size:1.5em;">
+    <li>Stacked self-attention + feedforward layers</li>
+    <li>Residual connections & normalization</li>
+    <li>Early layers: syntax</li>
+    <li>Middle layers: entities & relations</li>
+    <li>Late layers: intent, topic, reasoning</li>
+  </ul>
+</section>
+
+<!-- Slide 11: Task Heads -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Part 9: Task Heads</h2>
+  <ul style="font-size:1.5em;">
+    <li>Sentiment: [CLS] → Linear → Positive/Negative</li>
+    <li>NER: Token embeddings → Label per token</li>
+    <li>Translation: Encoder → Decoder → Next token</li>
+    <li>Language Modeling: Predict next token</li>
+  </ul>
+</section>
+
+<!-- Slide 12: Training -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Part 10: Training</h2>
+  <pre style="font-size:1.5em;">
+FOR each batch:
+  Forward pass
+  Compute loss
+  Backpropagate
+  Update weights
+  </pre>
+  <p style="font-size:1.5em;">Example (language modeling): input: "I love neural" → target: "networks"</p>
+</section>
+
+<!-- Slide 13: Inference -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Part 11: Inference</h2>
+  <pre style="font-size:1.5em;">
+User text
+↓
+Tokenize
+↓
+Embed
+↓
+Transformer layers
+↓
+Output probabilities
+↓
+Sample/choose next token
+↓
+Append token
+↓
+Repeat
+  </pre>
+</section>
+
+<!-- Slide 14: Universal NLP Pipeline -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Part 12: Universal NLP Pipeline</h2>
+  <pre style="font-size:1.5em;">
+1. Text preprocessing
+2. Tokenization
+3. Numerical encoding
+4. Representation learning
+5. Context modeling
+6. Task-specific output
+  </pre>
+</section>
+
+<!-- Slide 15: Conclusion -->
+<section data-transition="fade">
+  <h2 class="r-fit-text">Conclusion</h2>
+  <p style="font-size:1.5em; color:#4CAF50;">
+    NLP is not magic. LLMs are pipelines scaled massively.
+  </p>
+  <ul style="font-size:1.5em;">
+    <li>Learn patterns</li>
+    <li>Capture statistical structure</li>
+    <li>Predict effectively</li>
+  </ul>
+  <h1 class="r-fit-text">Welcome to NLP 🚀</h1>
+</section>
+  </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/math/math.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-mermaid-plugin@2.1.0/plugin/mermaid/mermaid.js"></script>
+    <script>
+        Reveal.initialize({
+            katex: {
+                version: 'latest',
+                delimiters: [
+                { left: '\\(', right: '\\)', display: false },
+                { left: '\\[', right: '\\]', display: true },
+                ],
+                ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            },
+            plugins: [ RevealHighlight, RevealMath.KaTeX, RevealMermaid ],
+            width: 1920,
+            height: 1080,
+            controls: false,
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Basics of NLP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
+    <script src="https://unpkg.com/function-plot/dist/function-plot.js"></script>
+    <style>
+        .function-plot .tick text {
+            fill: white !important;
+            font-size: 18px !important;
+        }
+        .function-plot .axis-label {
+            fill: white !important;
+            font-size: 20px !important;
+        }
+        .function-plot .axis path,
+        .function-plot .axis line {
+            stroke: white !important;
+        }
+        .function-plot .grid line {
+            stroke: #444 !important;
+            stroke-opacity: 0.7 !important;
+        }
+        code, pre, pre code, [class*="language-"] {
+            max-height: 100vh !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+<!-- START CHAPTER 1 -->
+
+<!-- Because this is the opening slide, it's a POWER TEXT slide designed to immediately engage the audience with a relatable question. Text analysis: "You've tried to understand how Neural Networks actually learn, right?" (69 characters) - this fits perfectly within the   sweet spot for maximum readability and impact. The word 'actually' is emphasized with a mark tag to highlight the gap between surface-level knowledge and true understanding, which is the core theme of the presentation. A simple fade transition is used to ease into the topic. -->
+<section data-transition="fade">
+    <h1 class=" ">You've tried to understand how llm <mark>actually</mark> understand text, right?</h1>
+</section>
+
+<!-- This is a POWER TEXT slide that builds on the previous one by describing the audience's common frustration. Text analysis: "You open a textbook... you click on a video..." (46 characters) - this is a great length for  . I'm using data-auto-animate to create a two-part sentence with the next slide, ensuring a smooth, narrative flow that builds suspense before revealing the negative outcome. -->
+<section data-auto-animate data-transition="fade">
+    <h1 class=" ">You open a textbook... you click on a video...</h1>
+</section>
+
+<!-- Continuing the previous thought, this is a POWER TEXT slide that delivers the punchline to the setup. Because it uses data-auto-animate, the previous text remains, and the new line appears, completing the sentence. Text analysis: "and within minutes, you're drowning." (36 characters) - short and impactful. The word 'drowning' is highlighted in red to visually represent the feeling of being overwhelmed, creating an emotional connection with the audience's struggle. -->
+<section data-auto-animate data-transition="fade">
+    <h1 class=" ">You open a textbook... you click on a video...</h1>
+    <h1 class=" ">and within minutes, you're <span style="color: #ff6b6b;">drowning</span>.</h1>
+</section>
+
+<!-- This is a POWER TEXT slide designed for rapid, jarring impact, simulating the feeling of being bombarded with jargon. Text analysis: "Backpropagation!" (16 characters) - perfect for  . Each jargon term gets its own slide with a different, fast transition (zoom, convex) to feel overwhelming. The red color emphasizes that these terms are part of the problem. -->
+<section data-transition="zoom">
+    <h1 class=" " style="color: #ff6b6b;">Bag of Words!</h1>
+</section>
+
+<!-- This is the second POWER TEXT slide in the jargon sequence. Text analysis: "Stochastic Gradient Descent!" (28 characters) - great for  . The 'convex' transition creates a disorienting effect, continuing the theme of overwhelming the viewer with complex terms, mirroring their learning experience. The red color remains consistent to signify these terms as intimidating barriers. -->
+<section data-transition="convex">
+    <h1 class=" " style="color: #ff6b6b;">TF-IDF</h1>
+</section>
+
+<!-- This is the final POWER TEXT slide in the jargon sequence. Text analysis: "The Chain Rule!" (15 characters) - ideal for  . The 'concave' transition completes the rapid-fire, confusing sequence. This series of slides validates the audience's feeling of being lost in terminology before the presentation offers a solution. -->
+<section data-transition="concave">
+    <h1 class=" " style="color: #ff6b6b;">Cosine similarity</h1>
+</section>
+<section data-transition="concave">
+    <h1 class=" " style="color: #ff6b6b;">Embeddings</h1>
+</section>
+
+<!-- This POWER TEXT slide summarizes the feeling created by the jargon. Text analysis: "It feels like an impossibly complex black box." (46 characters) - a concise and relatable statement for  . The phrase 'impossibly complex' is marked to emphasize the perceived difficulty, directly addressing the audience's pain point. A fade transition slows the pace after the previous rapid slides. -->
+<section data-transition="fade">
+    <h1 class=" ">It sounds abstract. Mathematical. Detached from language. </h1>
+</section>
+
+<!-- This POWER TEXT slide continues building the core problem. Text analysis: "A machine that just... performs magic." (36 characters) - perfect for  . The slide reinforces the idea that neural networks are often presented as mysterious and unknowable, setting the stage for the presentation to demystify them. It uses data-auto-animate to flow into the next point. -->
+<section data-auto-animate data-transition="slide">
+    <h2 class=" ">So people memorize formulas…</h2>
+</section>
+
+<!-- As a continuation of the previous thought, this POWER TEXT slide uses data-auto-animate to add the frustrating conclusion. Text analysis: "And you're told to just accept that it works." (44 characters). The word 'accept' is marked to highlight the passive, non-intuitive learning approach that this presentation will challenge. This slide completes the description of the problem. -->
+<section data-auto-animate data-transition="slide">
+    <h2 class=" ">So people memorize formulas…</h2>
+    <h1 class=" ">…but never actually *understand* what’s going on.</h1>
+</section>
+
+<!-- This is a pivotal POWER TEXT slide that acts as a major transition. Text analysis: "Here's the secret:" (18 characters) - it's short and creates anticipation. This slide serves as a dramatic pause before revealing the core thesis of the presentation. It uses data-auto-animate to build into the main reveal on the next slide. -->
+<section data-auto-animate data-transition="zoom">
+    <h1 class=" ">Here’s the truth:</h1>
+</section>
+
+<!-- This POWER TEXT slide delivers the central argument of the hook. It uses data-auto-animate to continue from the previous slide. Text analysis: "You've been taught this the wrong way around." (44 characters) - this is the thesis statement. The word 'wrong' is highlighted in red to create a powerful, provocative claim that grabs the audience's attention and makes them want to know the 'right' way. -->
+<section data-auto-animate data-transition="zoom">
+    <h1 class=" ">Here's the truth:</h1>
+    <h1 class=" ">You were taught NLP backwards.</h1>
+</section>
+<!-- START NLP FROM SCRATCH PRESENTATION -->
+
+<!-- Slide 1: Big Hook -->
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Here’s the truth:</h2>
+  <h1 class=" "><span style="color:#4CAF50;">You were taught NLP backwards.</span></h1>
+</section>
+
+<!-- Slide 2: Timeline -->
+ <section data-transition="fade">
+  <h2 class=" ">Before transformers.</h2>
+  </section>
+  <section data-transition="fade">
+  <h2 class=" ">Before transformers.</h2>
+  <h2 class=" ">Before embeddings.</h2>
+  </section>
+<section data-transition="fade">
+  <h2 class=" ">Before transformers.</h2>
+  <h2 class=" ">Before embeddings.</h2>
+  <h2 class=" ">Before deep learning.</h2>
+</section>
+
+<!-- Slide 3: Core Idea -->
+ <section data-auto-animate data-transition="fade">
+  <h1 class=" ">There is a simple, brutally intuitive idea underneath all of it:</h1>
+ </section>
+<section data-auto-animate data-transition="fade">
+  <h1 class=" ">There is a simple, brutally intuitive idea underneath all of it:</h1>
+  <blockquote style="font-size:2em; color:#4CAF50;">
+    Text is just data — and we need a way to turn words into numbers that preserve meaning.
+  </blockquote>
+</section>
+
+<!-- Slide 4: Time Promise -->
+<section data-transition="fade">
+  <h1 class=" ">Give me <mark>our time</mark>.</h1>
+  <h2 class=" ">We’ll rebuild NLP <span style="color:#4CAF50;">from scratch</span>, step by step:</h2>
+  <ul style="font-size: 1.5em;">
+    <li>No magic</li>
+    <li>No skipped logic</li>
+    <li>No “just trust the formula”</li>
+  </ul>
+  <h2 class=" ">By the end, TF-IDF will feel obvious — not intimidating.</h2>
+</section>
+
+<!-- Slide 5: Begin -->
+<section data-transition="fade">
+  <h1 class=" ">Let’s begin.</h1>
+</section>
+
+<!-- Slide 6: Part 1 — The Problem -->
+ <section data-transition="fade">
+  <h2 class=" ">Part 1: The Core Problem — Computers Don’t Understand Words</h2>
+  </section>
+<section data-transition="fade">
+  <h2 class=" ">Part 1: The Core Problem — Computers Don’t Understand Words</h2>
+  <h1 class=" ">THE PROBLEM:</h1>
+  <pre style="font-size: 1.5em;">
+INPUT: Text
+OUTPUT: Numbers a computer can compute with
+  </pre>
+</section>
+
+<!-- Slide 7: What Computers Understand -->
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Computers don’t understand:</h2>
+  <ul style="font-size: 1.5em;">
+    <li>words</li>
+    <li>sentences</li>
+    <li>grammar</li>
+    <li>meaning</li>
+  </ul>
+</section>
+<section data-auto-animate data-transition="fade">
+<h2 class=" ">They understand:</h2>
+  <ul style="font-size: 1.5em;">
+    <li>numbers</li>
+    <li>vectors</li>
+    <li>dot products</li>
+    <li>distances</li>
+  </ul>
+</section>
+<!-- Slide 8: The Core Question -->
+<section data-transition="fade">
+  <blockquote style="font-size:2em; color:#4CAF50;">
+    How do we convert text into numbers without destroying meaning?
+  </blockquote>
+</section>
+
+<!-- Slide 9: A Naive Idea -->
+<section data-transition="slide">
+  <h2 class=" ">A Naive Idea: Just Count Words</h2>
+  <h1 class=" ">Let’s start stupid. Really stupid.</h1>
+</section>
+
+<!-- Slide 10: Example Documents -->
+ <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Suppose we have three documents:</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Suppose we have three documents:</h2>
+  <table style="font-size:1.5em; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="border: 1px solid black; padding: 8px;">Document ID</th>
+        <th style="border: 1px solid black; padding: 8px;">Text</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px;">D1</td>
+        <td style="border: 1px solid black; padding: 8px;">I love machine learning</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px;">D2</td>
+        <td style="border: 1px solid black; padding: 8px;">I love deep learning</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px;">D3</td>
+        <td style="border: 1px solid black; padding: 8px;">I hate machine learning</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Slide 11: Naive Counting Idea -->
+ <section data-transition="fade">
+  <h2 class=" ">What if we just:</h2>
+  </section>
+  <section data-transition="fade">
+  <h2 class=" ">What if we just:</h2>
+  <ol style="font-size:1.5em;">
+    <li>List all unique words</li>
+    </ol>
+    </section>
+<section data-transition="fade">
+  <h2 class=" ">What if we just:</h2>
+  <ol style="font-size:1.5em;">
+    <li>List all unique words</li>
+    <li>Count how many times each word appears</li>
+  </ol>
+</section>
+
+<!-- END OF CURRENT CONTENT -->
+
+
+<!-- START CHAPTER 2 -->
+<!-- Part 2: Bag of Words — Text as a Shopping Bag -->
+
+<!-- Slide 12: Part 2 Intro -->
+ <section data-transition="fade">
+  <h2 class=" ">Part 2: Bag of Words — Text as a Shopping Bag</h2>
+  </section>
+
+  <section data-transition="fade">
+  <h2 class=" ">Part 2: Bag of Words — Text as a Shopping Bag</h2>
+  <h1 class=" ">THE IDEA:</h1>
+  </section>
+
+<section data-transition="fade">
+  <h2 class=" ">Part 2: Bag of Words — Text as a Shopping Bag</h2>
+  <h1 class=" ">THE IDEA:</h1>
+  <blockquote style="font-size:2em; color:#4CAF50;">
+    Ignore word order. Just count words.
+  </blockquote>
+</section>
+<section data-transition="slide">
+<h2 class=" ">This is called <span style="color:#4CAF50;">Bag of Words (BoW)</span>.</h2>
+</section>
+
+<!-- Slide 13: Step 1 — Build Vocabulary -->
+ <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Step 1: Build the Vocabulary</h2>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Step 1: Build the Vocabulary</h2>
+  <h1 class=" ">All unique words across all documents:</h1>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Step 1: Build the Vocabulary</h2>
+  <h1 class=" ">All unique words across all documents:</h1>
+  <pre style="font-size: 1.5em;">
+["I", "love", "hate", "machine", "deep", "learning"]
+</pre>
+</section>
+<section data-auto-animate data-transition="slide">
+     <pre style="font-size: 1.5em;"> Vocabulary = 
+["I", "love", "hate", "machine", "deep", "learning"]
+</pre>
+  <h2 class=" ">Vocabulary size = <span style="color:#4CAF50;">6</span></h2>
+</section>
+
+<!-- Slide 14: Step 2 — Convert Documents -->
+ <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Step 2: Convert Each Document into a Vector</h2>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Step 2: Convert Each Document into a Vector</h2>
+  <h1 class=" ">Each document becomes a <span style="color:#4CAF50;">count vector</span> of length 6.</h1>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Step 2: Convert Each Document into a Vector</h2>
+  <h1 class=" ">Each document becomes a <span style="color:#4CAF50;">count vector</span> of length 6.</h1>
+  <table style="font-size:1.5em; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="border: 1px solid black; padding: 8px;">Word →</th>
+        <th style="border: 1px solid black; padding: 8px;">I</th>
+        <th style="border: 1px solid black; padding: 8px;">love</th>
+        <th style="border: 1px solid black; padding: 8px;">hate</th>
+        <th style="border: 1px solid black; padding: 8px;">machine</th>
+        <th style="border: 1px solid black; padding: 8px;">deep</th>
+        <th style="border: 1px solid black; padding: 8px;">learning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px;">D1</td>
+        <td style="border: 1px solid black; padding: 8px;">1</td>
+        <td style="border: 1px solid black; padding: 8px;">1</td>
+        <td style="border: 1px solid black; padding: 8px;">0</td>
+        <td style="border: 1px solid black; padding: 8px;">1</td>
+        <td style="border: 1px solid black; padding: 8px;">0</td>
+        <td style="border: 1px solid black; padding: 8px;">1</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px;">D2</td>
+        <td style="border: 1px solid black; padding: 8px;">1</td>
+        <td style="border: 1px solid black; padding: 8px;">1</td>
+        <td style="border: 1px solid black; padding: 8px;">0</td>
+        <td style="border: 1px solid black; padding: 8px;">0</td>
+        <td style="border: 1px solid black; padding: 8px;">1</td>
+        <td style="border: 1px solid black; padding: 8px;">1</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black; padding: 8px;">D3</td>
+        <td style="border: 1px solid black; padding: 8px;">1</td>
+        <td style="border: 1px solid black; padding: 8px;">0</td>
+        <td style="border: 1px solid black; padding: 8px;">1</td>
+        <td style="border: 1px solid black; padding: 8px;">1</td>
+        <td style="border: 1px solid black; padding: 8px;">0</td>
+        <td style="border: 1px solid black; padding: 8px;">1</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<section data-auto-animate data-transition="slide">
+ <h2 class=" "><mark> Boom: </mark> Text → numbers.</h2>
+ </section>
+
+<!-- Slide 15: What BoW Gets Right -->
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">What Bag of Words Gets Right ✅</h2>
+  <ul style="font-size: 1.5em;">
+    <li>Simple</li>
+    <li>Fast</li>
+    <li>Works surprisingly well</li>
+  </ul>
+</section>
+
+<!-- Slide 16: What BoW Gets Wrong -->
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">What Bag of Words Gets Wrong ❌</h2>
+  <ul style="font-size: 1.5em;">
+    <li>Word order is gone</li>
+    <li>All words treated equally</li>
+    <li>Common words dominate</li>
+  </ul>
+</section>
+<section data-auto-animate data-transition="fade">
+<h2 class=" ">Example:</h2>
+</section>
+<section data-auto-animate data-transition="slide">
+<h2 class=" ">Example:</h2>
+  <ul style="font-size: 1.5em;">
+    <li>“learning” appears everywhere</li>
+    <li>“love” vs “hate” barely matter numerically</li>
+  </ul>
+  </section>
+<section data-auto-animate data-transition="slide">
+  <h2 class=" "> <mark> We need something smarter. </mark></h2>
+</section>
+<!--END Chapter 2-->
+
+<!-- START CHAPTER 3 -->
+
+<!-- Part 3: Term Frequency (TF) — How Important Is a Word In This Document? -->
+
+<!-- Slide 17: Part 3 Intro -->
+ <section data-transition="fade">
+  <h2 class=" ">Part 3: Term Frequency (TF)</h2>
+  </section>
+  <section data-transition="fade">
+  <h2 class=" ">Part 3: Term Frequency (TF)</h2>
+  <h1 class=" ">How Important Is a Word <em>In This Document</em>?</h1>
+  </section>
+<section data-transition="fade">
+  <h2 class=" ">Part 3: Term Frequency (TF)</h2>
+  <h1 class=" ">How Important Is a Word <em>In This Document</em>?</h1>
+  <blockquote style="font-size:2em; color:#4CAF50;">
+    If a word appears many times in a document, it’s probably important <em>for that document</em>.
+  </blockquote>
+</section>
+
+<!-- Slide 18: TF Definition -->
+<section data-auto-animate data-transition="slide">
+  <h2 class=" ">Definition</h2>
+  <pre style="font-size: 1.5em;">
+TF(word, document) = 
+  (Number of times word appears in document)
+  / (Total number of words in document)
+  </pre>
+</section>
+
+<!-- Slide 19: TF Example -->
+ <section data-auto-animate data-transition="fade">
+  <h2 class="">Example</h2>
+  <pre style="font-size:1.5em;">
+Document:
+"I love love love machine learning"
+  </pre>
+  </section>
+
+<section data-auto-animate data-transition="fade">
+  <h2>Example</h2>
+  <pre style="font-size:1.5em;">
+Document:
+"I love love love machine learning"
+  </pre>
+  <h2>Word counts:</h2>
+  <ul style="font-size: 1.5em;">
+    <li>love = 3</li>
+    <li>machine = 1</li>
+    <li>learning = 1</li>
+    <li>total words = 5</li>
+  </ul>
+</section>
+<section data-auto-animate data-transition="fade">
+<table style="font-size:1.5em; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="border:1px solid black; padding:8px;">Word</th>
+        <th style="border:1px solid black; padding:8px;">TF</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">love</td>
+        <td style="border:1px solid black; padding:8px;">3/5 = 0.6</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">machine</td>
+        <td style="border:1px solid black; padding:8px;">1/5 = 0.2</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">learning</td>
+        <td style="border:1px solid black; padding:8px;">1/5 = 0.2</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<section data-auto-animate data-transition="fade">
+<table style="font-size:1.5em; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="border:1px solid black; padding:8px;">Word</th>
+        <th style="border:1px solid black; padding:8px;">TF</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">love</td>
+        <td style="border:1px solid black; padding:8px;">3/5 = 0.6</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">machine</td>
+        <td style="border:1px solid black; padding:8px;">1/5 = 0.2</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">learning</td>
+        <td style="border:1px solid black; padding:8px;">1/5 = 0.2</td>
+      </tr>
+    </tbody>
+  </table>
+  <h2 class=" ">TF captures <span style="color:#4CAF50;">local importance</span>.</h2>
+
+</section>
+  
+<!-- Slide 20: TF Problem -->
+<section data-transition="fade">
+  <h2 class=" ">But there’s a problem…</h2>
+</section>
+
+<!-- Part 4: The Fatal Flaw — Common Words Are Useless -->
+
+<!-- Slide 21: Common Words -->
+ <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Part 4: The Fatal Flaw</h2>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Part 4: The Fatal Flaw</h2>
+  <h1 class=" ">Common Words Are Useless</h1>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Part 4: The Fatal Flaw</h2>
+  <h1 class=" ">Common Words Are Useless</h1>
+  <ul style="font-size:1.5em;">
+    <li>the</li>
+    <li>is</li>
+    <li>and</li>
+    <li>learning (in ML corpora!)</li>
+  </ul>
+</section>
+
+<!-- Slide 22: Problem with TF -->
+ <section data-auto-animate data-transition="fade">
+  <blockquote style="font-size:2em; color:#4CAF50;">
+    TF alone says: “learning is very important!”
+  </blockquote>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <blockquote style="font-size:2em; color:#4CAF50;">
+    TF alone says: “learning is very important!”
+  </blockquote>
+  <h2 class=" ">But if <em>every document</em> contains “learning”…</h2>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <blockquote style="font-size:2em; color:#4CAF50;">
+    TF alone says: “learning is very important!”
+  </blockquote>
+  <h2 class=" ">But if <em>every document</em> contains “learning”…</h2>
+  <h2 class=" ">…it tells us nothing about <span style="color:#4CAF50;">what makes a document special</span>.</h2>
+  </section>
+
+<section data-auto-animate data-transition="fade">
+  <blockquote style="font-size:2em; color:#4CAF50;">
+    TF alone says: “learning is very important!”
+  </blockquote>
+  <h2 class=" ">But if <em>every document</em> contains “learning”…</h2>
+  <h2 class=" ">…it tells us nothing about <span style="color:#4CAF50;">what makes a document special</span>.</h2>
+  <h2 class=" ">We need a way to <span style="color:#4CAF50;">downweight common words</span>.</h2>
+</section>
+
+
+<!--END Chapter 3-->
+
+<!-- START CHAPTER 4 -->
+
+<!-- Part 5: Inverse Document Frequency (IDF) — Punishing Common Words -->
+
+<!-- Slide 23: Part 5 Intro -->
+ <section data-transition="fade">
+  <h2 class=" ">Part 5: Inverse Document Frequency (IDF)</h2>
+  </section>
+  <section data-transition="fade">
+  <h2 class=" ">Part 5: Inverse Document Frequency (IDF)</h2>
+  <h1 class=" ">Punishing Common Words</h1>
+  </section>
+<section data-transition="fade">
+  <h2 class=" ">Part 5: Inverse Document Frequency (IDF)</h2>
+  <h1 class=" ">Punishing Common Words</h1>
+  <blockquote style="font-size:2em; color:#4CAF50;">
+    A word is important if it appears in <em>this document</em> but NOT in <em>every document</em>.
+  </blockquote>
+</section>
+
+<!-- Slide 24: IDF Definition -->
+<section data-auto-animate data-transition="slide">
+  <h2>Definition</h2>
+  <pre style="font-size:1.5em;">
+IDF(word) = log(
+  Total number of documents
+  /
+  Number of documents containing the word
+)
+  </pre>
+</section>
+
+<!-- Slide 25: IDF Example -->
+<section data-auto-animate data-transition="fade">
+  <h2>Example</h2>
+  <h1 class=" ">We have 3 documents total.</h1>
+  <table style="font-size:1.5em; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="border:1px solid black; padding:8px;">Word</th>
+        <th style="border:1px solid black; padding:8px;">Docs Containing It</th>
+        <th style="border:1px solid black; padding:8px;">IDF</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">I</td>
+        <td style="border:1px solid black; padding:8px;">3</td>
+        <td style="border:1px solid black; padding:8px;">log(3/3) = 0</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">learning</td>
+        <td style="border:1px solid black; padding:8px;">3</td>
+        <td style="border:1px solid black; padding:8px;">log(3/3) = 0</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">love</td>
+        <td style="border:1px solid black; padding:8px;">2</td>
+        <td style="border:1px solid black; padding:8px;">log(3/2) ≈ 0.18</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">hate</td>
+        <td style="border:1px solid black; padding:8px;">1</td>
+        <td style="border:1px solid black; padding:8px;">log(3/1) ≈ 1.10</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">deep</td>
+        <td style="border:1px solid black; padding:8px;">1</td>
+        <td style="border:1px solid black; padding:8px;">log(3/1) ≈ 1.10</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Slide 26: IDF Insight -->
+ <section data-auto-animate data-transition="fade">
+  <h2 class=" ">🔥 Rare words get <span style="color:#4CAF50;">higher scores</span></h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">🔥 Rare words get <span style="color:#4CAF50;">higher scores</span></h2>
+  <h2 class=" ">❄️ Common words get <span style="color:#F44336;">crushed</span></h2>
+</section>
+
+
+<!-- END CHAPTER 4 -->
+
+<!-- START CHAPTER 5 -->
+
+<!-- Part 6: TF-IDF — The Sweet Spot -->
+
+<!-- Slide 27: Part 6 Intro -->
+ <section data-transition="slide">
+  <h2 class=" ">Part 6: TF-IDF</h2>
+  </section>
+<section data-transition="slide">
+  <h1 class=" ">The Sweet Spot</h1>
+  <blockquote style="font-size:2em; color:#4CAF50;">
+    TF-IDF = TF × IDF
+  </blockquote>
+  </section>
+  <section data-transition="fade">
+   <h2 class="">A word is important if:</h2>
+   </section>
+     <section data-transition="fade">
+   <h2 class="">A word is important if:</h2>
+  <ul style="font-size:1.5em;">
+    <li>It appears often in this document (<span style="color:#4CAF50;">TF</span>)</li>
+    <li>It appears rarely across documents (<span style="color:#4CAF50;">IDF</span>)</li>
+  </ul>
+</section>
+
+<!-- Slide 28: Step-by-Step Example -->
+<section data-auto-animate data-transition="slide">
+  <h2 class="">Step-by-Step Example</h2>
+  <h1 class=" ">Document D3:</h1>
+  <pre style="font-size:1.5em;">
+"I hate machine learning"
+  </pre>
+</section>
+
+<!-- Slide 29: TF Values -->
+ <section data-auto-animate data-transition="fade">
+  <h2 class=" ">TF Values</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">TF Values</h2>
+  <ul style="font-size:1.5em;">
+    <li>hate = 1/4 = 0.25</li>
+    <li>machine = 1/4 = 0.25</li>
+    <li>learning = 1/4 = 0.25</li>
+  </ul>
+</section>
+
+<!-- Slide 30: IDF Values -->
+<!-- Slide 30: IDF Values (Updated with Calculations) -->
+ <section data-auto-animate data-transition="fade">
+  <h2 class=" ">IDF Values</h2>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <h2 class=" ">IDF Values</h2>
+  <h1 class=" ">IDF(word) = log(Total Documents / Documents Containing Word)</h1>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <h2 class=" ">IDF Values</h2>
+  <h1 class=" ">IDF(word) = log(Total Documents / Documents Containing Word)</h1>
+  <ul style="font-size:1.5em;">
+    <li>Total documents (N) = 3</li>
+    <li>Count how many documents contain each word</li>
+  </ul>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <h2 class=" ">IDF Values</h2>
+  <h1 class=" ">IDF(word) = log(Total Documents / Documents Containing Word)</h1>
+  <ul style="font-size:1.5em;">
+    <li>Total documents (N) = 3</li>
+    <li>Count how many documents contain each word</li>
+  </ul>
+  
+  <table style="font-size:1.5em; border-collapse: collapse; margin-top: 1em;">
+    <thead>
+      <tr>
+        <th style="border:1px solid black; padding:8px;">Word</th>
+        <th style="border:1px solid black; padding:8px;">Docs Containing Word</th>
+        <th style="border:1px solid black; padding:8px;">Calculation</th>
+        <th style="border:1px solid black; padding:8px;">IDF</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">hate</td>
+        <td style="border:1px solid black; padding:8px;">1</td>
+        <td style="border:1px solid black; padding:8px;">log(3 / 1)</td>
+        <td style="border:1px solid black; padding:8px; color:#4CAF50;"><strong>≈ 1.10</strong></td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">machine</td>
+        <td style="border:1px solid black; padding:8px;">2</td>
+        <td style="border:1px solid black; padding:8px;">log(3 / 2)</td>
+        <td style="border:1px solid black; padding:8px;">≈ 0.18</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">learning</td>
+        <td style="border:1px solid black; padding:8px;">3</td>
+        <td style="border:1px solid black; padding:8px;">log(3 / 3)</td>
+        <td style="border:1px solid black; padding:8px; color:#F44336;"><strong>0</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  </section>
+<section data-auto-animate data-transition="slide">
+  <h2 class=" " style="margin-top: 1em;">🔥 Rare words get higher IDF scores, common words get 0</h2>
+</section>
+
+
+<!-- Slide 31: TF-IDF Table -->
+ <section data-auto-animate data-transition="fade">
+  <h2 class=" ">TF × IDF = TF-IDF</h2>
+  <table style="font-size:1.5em; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="border:1px solid black; padding:8px;">Word</th>
+        <th style="border:1px solid black; padding:8px;">TF</th>
+        <th style="border:1px solid black; padding:8px;">IDF</th>
+        <th style="border:1px solid black; padding:8px;">TF-IDF</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">hate</td>
+        <td style="border:1px solid black; padding:8px;">0.25</td>
+        <td style="border:1px solid black; padding:8px;">1.10</td>
+        <td style="border:1px solid black; padding:8px; color:#4CAF50;"><strong>0.275</strong></td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">machine</td>
+        <td style="border:1px solid black; padding:8px;">0.25</td>
+        <td style="border:1px solid black; padding:8px;">0.18</td>
+        <td style="border:1px solid black; padding:8px;">0.045</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">learning</td>
+        <td style="border:1px solid black; padding:8px;">0.25</td>
+        <td style="border:1px solid black; padding:8px;">0</td>
+        <td style="border:1px solid black; padding:8px; color:#F44336;"><strong>0</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">TF × IDF = TF-IDF</h2>
+  <table style="font-size:1.5em; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="border:1px solid black; padding:8px;">Word</th>
+        <th style="border:1px solid black; padding:8px;">TF</th>
+        <th style="border:1px solid black; padding:8px;">IDF</th>
+        <th style="border:1px solid black; padding:8px;">TF-IDF</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">hate</td>
+        <td style="border:1px solid black; padding:8px;">0.25</td>
+        <td style="border:1px solid black; padding:8px;">1.10</td>
+        <td style="border:1px solid black; padding:8px; color:#4CAF50;"><strong>0.275</strong></td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">machine</td>
+        <td style="border:1px solid black; padding:8px;">0.25</td>
+        <td style="border:1px solid black; padding:8px;">0.18</td>
+        <td style="border:1px solid black; padding:8px;">0.045</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">learning</td>
+        <td style="border:1px solid black; padding:8px;">0.25</td>
+        <td style="border:1px solid black; padding:8px;">0</td>
+        <td style="border:1px solid black; padding:8px; color:#F44336;"><strong>0</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2 class=" ">🎯 “hate” dominates the document meaning</h2>
+  <h2 class=" ">🎯 Exactly what we want.</h2>
+</section>
+
+<!-- Slide 32: TF-IDF Python Example -->
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">TF-IDF in Python</h2>
+  <pre style="font-size:1.5em;">
+from sklearn.feature_extraction.text 
+import TfidfVectorizer
+
+docs = [
+    "I love machine learning",
+    "I love deep learning",
+    "I hate machine learning"
+]
+
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform(docs)
+
+print(vectorizer.get_feature_names_out())
+print(tfidf_matrix.toarray())
+  </pre>
+  <h2 class=" ">Output: vectors showing importance of words ✅</h2>
+</section>
+
+<!-- Slide 33: TF-IDF Intuition -->
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Intuition Recap</h2>
+  <ul style="font-size:1.5em;">
+    <li><span style="color:#4CAF50;">TF</span> = importance in this document</li>
+    <li><span style="color:#4CAF50;">IDF</span> = penalize words that appear everywhere</li>
+    <li>TF × IDF = the words that <span style="color:#4CAF50;">truly define the document</span></li>
+  </ul>
+</section>
+
+<!-- END CHAPTER 5 -->
+
+<!-- START CHAPTER 6 -->
+<!-- Part 7: Text as Geometry — Vectors and Similarity -->
+
+<!-- Slide 34: Intro to Vectors -->
+ <section data-transition="fade">
+  <h2 class=" ">Part 7: Text as Geometry</h2>
+  </section>
+  <section data-transition="fade">
+  <h2 class=" ">Part 7: Text as Geometry</h2>
+  <h1 class=" ">Documents as Vectors</h1>
+  </section>
+<section data-transition="fade">
+  <h2 class=" ">Part 7: Text as Geometry</h2>
+  <h1 class=" ">Documents as Vectors</h1>
+  <p style="font-size:1.5em;">
+    After TF-IDF, each document becomes a vector in a multi-dimensional space.
+  </p>
+  <ul style="font-size:1.5em;">
+    <li>Compare documents</li>
+    <li>Cluster text</li>
+    <li>Search intelligently</li>
+  </ul>
+</section>
+
+<!-- Slide 35: Example — Document Vectors -->
+ <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Example: TF-IDF Vectors</h2>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Example: TF-IDF Vectors</h2>
+  <p style="font-size:1.5em;">Documents:</p>
+  <ul style="font-size:1.5em;">
+    <li>D1: "I love machine learning"</li>
+    <li>D2: "I love deep learning"</li>
+    <li>D3: "I hate machine learning"</li>
+  </ul>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Example: TF-IDF Vectors</h2>
+  <p style="font-size:1.5em;">Documents:</p>
+  <ul style="font-size:1.5em;">
+    <li>D1: "I love machine learning"</li>
+    <li>D2: "I love deep learning"</li>
+    <li>D3: "I hate machine learning"</li>
+  </ul>
+  <p style="font-size:1.5em;">TF-IDF vectors (words ordered as: hate, machine, deep, learning, love, I)</p>
+  <pre style="font-size:1.5em;">
+D1 = [0, 0.045, 0, 0, 0.09, 0]
+D2 = [0, 0, 0.18, 0, 0.09, 0]
+D3 = [0.275, 0.045, 0, 0, 0, 0]
+  </pre>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Example: TF-IDF Vectors</h2>
+  <p style="font-size:1.5em;">Documents:</p>
+  <ul style="font-size:1.5em;">
+    <li>D1: "I love machine learning"</li>
+    <li>D2: "I love deep learning"</li>
+    <li>D3: "I hate machine learning"</li>
+  </ul>
+  <p style="font-size:1.5em;">TF-IDF vectors (words ordered as: hate, machine, deep, learning, love, I)</p>
+  <pre style="font-size:1.5em;">
+D1 = [0, 0.045, 0, 0, 0.09, 0]
+D2 = [0, 0, 0.18, 0, 0.09, 0]
+D3 = [0.275, 0.045, 0, 0, 0, 0]
+  </pre>
+  <p style="font-size:1.5em;">Now each document is a point in 6-dimensional space.</p>
+</section>
+
+<!-- Slide 36: Cosine Similarity -->
+ <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Cosine Similarity</h2>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Cosine Similarity</h2>
+  <blockquote style="font-size:1.5em; color:#4CAF50;">
+    Measure the angle between vectors, not their length
+  </blockquote>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Cosine Similarity</h2>
+  <blockquote style="font-size:1.5em; color:#4CAF50;">
+    Measure the angle between vectors, not their length
+  </blockquote>
+  <pre style="font-size:1.5em;">
+cosine_similarity(A,B) = (A · B) / (||A|| × ||B||)
+  </pre>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Cosine Similarity</h2>
+  <blockquote style="font-size:1.5em; color:#4CAF50;">
+    Measure the angle between vectors, not their length
+  </blockquote>
+  <pre style="font-size:1.5em;">
+cosine_similarity(A,B) = (A · B) / (||A|| × ||B||)
+  </pre>
+  <ul style="font-size:1.5em;">
+    <li>1 → identical meaning</li>
+    <li>0 → unrelated</li>
+    <li>-1 → opposite meaning</li>
+  </ul>
+</section>
+
+<!-- Slide 37: Cosine Similarity Example -->
+ <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Cosine Similarity Example</h2>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Cosine Similarity Example</h2>
+  <p style="font-size:1.5em;">Compare D1 and D2:</p>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Cosine Similarity Example</h2>
+  <p style="font-size:1.5em;">Compare D1 and D2:</p>
+  <pre style="font-size:1.2em;">
+D1 = [0, 0.045, 0, 0, 0.09, 0]
+D2 = [0, 0, 0.18, 0, 0.09, 0]
+</pre>
+</section>
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Cosine Similarity Example</h2>
+  <p style="font-size:1.5em;">Compare D1 and D2:</p>
+  <pre style="font-size:1.0em;">
+D1 = [0, 0.045, 0, 0, 0.09, 0]
+D2 = [0, 0, 0.18, 0, 0.09, 0]
+
+Dot product: 0*0 + 0.045*0 + 0*0.18 + 0*0 + 0.09*0.09 + 0*0 = 0.0081
+||D1|| = sqrt(0^2 + 0.045^2 + 0^2 + 0^2 + 0.09^2 + 0^2) ≈ 0.101
+||D2|| = sqrt(0^2 + 0^2 + 0.18^2 + 0^2 + 0.09^2 + 0^2) ≈ 0.201
+
+</pre>
+</section>
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Cosine Similarity Example</h2>
+  <p style="font-size:1.5em;">Compare D1 and D2:</p>
+  <pre style="font-size:1.0em;">
+D1 = [0, 0.045, 0, 0, 0.09, 0]
+D2 = [0, 0, 0.18, 0, 0.09, 0]
+
+Dot product: 0*0 + 0.045*0 + 0*0.18 + 0*0 + 0.09*0.09 + 0*0 = 0.0081
+||D1|| = sqrt(0^2 + 0.045^2 + 0^2 + 0^2 + 0.09^2 + 0^2) ≈ 0.101
+||D2|| = sqrt(0^2 + 0^2 + 0.18^2 + 0^2 + 0.09^2 + 0^2) ≈ 0.201
+
+cosine_similarity(D1, D2) = 0.0081 / (0.101 * 0.201) ≈ 0.40
+</pre>
+</section>
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Cosine Similarity Example</h2>
+  <p style="font-size:1.5em;">Compare D1 and D2:</p>
+  <pre style="font-size:1.0em;">
+D1 = [0, 0.045, 0, 0, 0.09, 0]
+D2 = [0, 0, 0.18, 0, 0.09, 0]
+
+Dot product: 0*0 + 0.045*0 + 0*0.18 + 0*0 + 0.09*0.09 + 0*0 = 0.0081
+||D1|| = sqrt(0^2 + 0.045^2 + 0^2 + 0^2 + 0.09^2 + 0^2) ≈ 0.101
+||D2|| = sqrt(0^2 + 0^2 + 0.18^2 + 0^2 + 0.09^2 + 0^2) ≈ 0.201
+
+cosine_similarity(D1, D2) = 0.0081 / (0.101 * 0.201) ≈ 0.40
+  </pre>
+  <p style="font-size:1.5em;">✔ Shows moderate similarity — they share "love" but differ in other words.</p>
+</section>
+
+<!-- Slide 38: Why TF-IDF + Cosine Works -->
+ <section data-auto-animate data-transition="fade">
+  <h2 class=" ">Why This Works</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Why This Works</h2>
+  <ul style="font-size:1.5em;">
+    <li>Long documents don’t dominate short ones</li>
+    <li>Only <span style="color:#4CAF50;">direction (meaning)</span> matters</li>
+    <li>TF-IDF + cosine similarity = classic search engine logic</li>
+  </ul>
+</section>
+
+<!-- Part 8: Limitations of TF-IDF -->
+
+<!-- Slide 39: Limitations Intro -->
+ <section data-transition="fade">
+  <h2 class=" ">Part 8: Limitations of TF-IDF</h2>
+  </section>
+<section data-transition="fade">
+  <h2 class=" ">Part 8: Limitations of TF-IDF</h2>
+  <h1 class=" ">Powerful but Imperfect</h1>
+</section>
+
+<!-- Slide 40: Limitation Example -->
+ <section data-auto-animate data-transition="fade">
+  <h2 class=" ">TF-IDF Misses Meaning</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">TF-IDF Misses Meaning</h2>
+  <p style="font-size:1.5em;">Compare these sentences:</p>
+  <ul style="font-size:1.5em;">
+    <li>"The king rules the kingdom"</li>
+    <li>"The queen governs the realm"</li>
+  </ul>
+  <p style="font-size:1.5em;">TF-IDF sees almost no shared words → similarity ≈ 0</p>
+  <p style="font-size:1.5em; color:#F44336;">❌ “king” and “queen” are related in meaning, but TF-IDF doesn’t know that</p>
+  <p style="font-size:1.5em;">✔ TF-IDF understands <span style="color:#4CAF50;">importance</span>, not <span style="color:#4CAF50;">meaning</span></p>
+</section>
+
+<!-- Slide 41: Transition -->
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">To truly capture meaning…</h2>
+  <h1 class=" ">We need embeddings & neural networks</h1>
+</section>
+
+<!-- END CHAPTER 6 -->
+
+<!-- START CHAPTER 7 -->
+<!-- Part 9: Embeddings — Meaning as Position in Space -->
+
+<!-- Slide 42: Intro to Embeddings -->
+ <section data-transition="fade">
+  <h2 class=" ">Part 9: Embeddings</h2>
+  </section>
+  <section data-transition="fade">
+  <h2 class=" ">Part 9: Embeddings</h2>
+  <h1 class=" ">Meaning as Position in Space</h1>
+  </section>
+  <section data-transition="fade">
+  <h2 class=" ">Part 9: Embeddings</h2>
+  <h1 class=" ">Meaning as Position in Space</h1>
+  <blockquote style="font-size:1.5em; color:#4CAF50;">
+    Words with similar meanings should live close together
+  </blockquote>
+  </section>
+<section data-transition="fade">
+  <h2 class=" ">Part 9: Embeddings</h2>
+  <h1 class=" ">Meaning as Position in Space</h1>
+  <blockquote style="font-size:1.5em; color:#4CAF50;">
+    Words with similar meanings should live close together
+  </blockquote>
+  <p style="font-size:1.5em;">
+    Instead of counting words (Word → Count), we learn a <strong>dense vector</strong> for each word:
+  </p>
+  <pre style="font-size:1.5em;">
+Word → Dense vector (e.g. 300 numbers)
+  </pre>
+</section>
+
+<!-- Slide 43: Intuitive Example -->
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Embedding Examples</h2>
+  <ul style="font-size:1.5em;">
+    <li>king − man + woman ≈ queen</li>
+    <li>Paris − France + Italy ≈ Rome</li>
+  </ul>
+  <p style="font-size:1.5em;">
+    ✅ Embeddings capture <span style="color:#4CAF50;">meaning</span>, not just word frequency.
+  </p>
+</section>
+
+<!-- Slide 44: Embedding Techniques -->
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Popular Embedding Techniques</h2>
+  <ul style="font-size:1.5em;">
+    <li>Word2Vec</li>
+    <li>GloVe</li>
+    <li>FastText</li>
+    <li>Transformers (contextual embeddings)</li>
+  </ul>
+</section>
+
+<!-- Slide 45: Numerical Example -->
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Tiny Numerical Example</h2>
+  <p style="font-size:1.5em;">Imagine 2D embeddings for 5 words:</p>
+  <pre style="font-size:1.5em;">
+king   = [0.8, 0.2]
+queen  = [0.78, 0.25]
+man    = [0.7, 0.1]
+woman  = [0.68, 0.15]
+apple  = [0.1, 0.9]
+  </pre>
+  <p style="font-size:1.5em;">
+    Cosine similarity shows <strong>king ≈ queen</strong>, <strong>man ≈ woman</strong>, <strong>king & apple ≈ unrelated</strong>
+  </p>
+</section>
+
+<!-- Slide 46: Big Picture -->
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">The Big Picture</h2>
+  <table style="font-size:1.5em; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="border:1px solid black; padding:8px;">Technique</th>
+        <th style="border:1px solid black; padding:8px;">What It Captures</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">Bag of Words</td>
+        <td style="border:1px solid black; padding:8px;">Word presence</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">TF</td>
+        <td style="border:1px solid black; padding:8px;">Local importance</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">IDF</td>
+        <td style="border:1px solid black; padding:8px;">Global rarity</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">TF-IDF</td>
+        <td style="border:1px solid black; padding:8px;">Importance + rarity</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black; padding:8px;">Embeddings</td>
+        <td style="border:1px solid black; padding:8px; color:#4CAF50;"><strong>Meaning</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Slide 47: Modern NLP Workflow -->
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Modern NLP Workflow</h2>
+  <ol style="font-size:1.5em;">
+    <li>Convert text to vectors</li>
+    <li>Compare vectors (similarity, clustering)</li>
+    <li>Optimize distances (learning)</li>
+  </ol>
+  <p style="font-size:1.5em;">Same story as TF-IDF, just bigger and smarter.</p>
+</section>
+
+<!-- Slide 48: Conclusion -->
+<section data-auto-animate data-transition="fade">
+  <h1 class=" ">Welcome to NLP 🚀</h1>
+</section>
+
+<!-- Slide 49: Optional Python Example for Embeddings -->
+<section data-auto-animate data-transition="fade">
+  <h2 class=" ">Embeddings in Python</h2>
+  <pre style="font-size:1.5em;">
+from sklearn.feature_extraction.text 
+import TfidfVectorizer
+from sklearn.metrics.pairwise 
+import cosine_similarity
+
+docs = ["I love machine learning", 
+        "I love deep learning", 
+        "I hate machine learning"]
+
+# TF-IDF vectors
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform(docs)
+
+# Cosine similarity
+sim_matrix = cosine_similarity(tfidf_matrix)
+print(sim_matrix)
+  </pre>
+  <p style="font-size:1.5em;">
+    🔹 Shows how documents relate in vector space <br> 
+    🔹 Embeddings extend this idea to capture meaning
+  </p>
+</section>
+
+<!-- END CHAPTER 8 -->
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/math/math.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-mermaid-plugin@2.1.0/plugin/mermaid/mermaid.js"></script>
+    <script>
+        Reveal.initialize({
+            katex: {
+                version: 'latest',
+                delimiters: [
+                { left: '\\(', right: '\\)', display: false },
+                { left: '\\[', right: '\\]', display: true },
+                ],
+                ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            },
+            plugins: [ RevealHighlight, RevealMath.KaTeX, RevealMermaid ],
+            width: 1920,
+            height: 1080,
+            controls: false,
+        });
+    </script>
+</body>
+</html>

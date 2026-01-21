@@ -34,15 +34,26 @@
         <div class="slides">
 
 <!-- Part 0: Title Slide -->
+ <section data-transition="fade">
+  <h1 class="r-fit-text">NLP Pipelines</h1>
+  </section>
 <section data-transition="fade">
-  <h1 class="r-fit-text">Give Me 1 Hour, You Will MASTER NLP Pipelines</h1>
+  <h1 class="r-fit-text">NLP Pipelines</h1>
   <h2 class="r-fit-text">From Raw Text to Intelligent Behavior</h2>
-  <blockquote style="font-size:1.5em; color:#4CAF50;">
-    You’ve Been Learning NLP Completely Backwards
-  </blockquote>
 </section>
 
 <!-- Slide 1: Intro -->
+ <section data-transition="fade">
+  <h2 class="r-fit-text">Introduction</h2>
+  </section>
+  <section data-transition="fade">
+  <h2 class="r-fit-text">Introduction</h2>
+  <ul style="font-size:1.5em;">
+    <li>“NLP understands language.” ❌</li>
+    <li>“Transformers read text.” ❌</li>
+    <li>“LLMs know what words mean.” ❌</li>
+  </ul>
+  </section>
 <section data-transition="fade">
   <h2 class="r-fit-text">Introduction</h2>
   <ul style="font-size:1.5em;">
@@ -53,11 +64,153 @@
   <p style="font-size:1.5em;">NLP is a <strong>pipeline</strong> of transformations: <em>text → numbers → decisions</em>.</p>
 </section>
 
-<!-- Slide 2: The Core Problem -->
+<!-- Part 0: Title Slide -->
+
+
+
 <section data-transition="fade">
-  <h2 class="r-fit-text">Part 1: The Core Problem</h2>
+  <p>
+    But if you’ve ever tried to actually learn NLP, it probably went like this:
+  </p>
+  </section>
+  <section data-transition="fade">
+  <p>
+    But if you’ve ever tried to actually learn NLP, it probably went like this:
+  </p>
+  <ul>
+    <li>“Tokenization”</li>
+    <li>“Embeddings”</li>
+    <li>“Attention”</li>
+    <li>“POS tagging”</li>
+    <li>“NER”</li>
+    <li>“Transformers”</li>
+    <li>“BERT”</li>
+    <li>“GPT”</li>
+  </ul>
+  </section>
+<section data-transition="fade">
+  <p>
+    But if you’ve ever tried to actually learn NLP, it probably went like this:
+  </p>
+  <ul>
+    <li>“Tokenization”</li>
+    <li>“Embeddings”</li>
+    <li>“Attention”</li>
+    <li>“POS tagging”</li>
+    <li>“NER”</li>
+    <li>“Transformers”</li>
+    <li>“BERT”</li>
+    <li>“GPT”</li>
+  </ul>
+  <p>
+    All thrown at you without context. It feels like a pile of unrelated tricks.
+  </p>
+</section>
+<section data-transition="fade">
+  <p>
+    Here’s the truth:
+  </p>
+  </section>
+<section data-transition="fade">
+  <p>
+    Here’s the truth:
+  </p>
+  <p>
+    NLP is not magic. NLP is a pipeline. A sequence of simple transformations that turn <strong>text → numbers → decisions</strong>.
+  </p>
+  </section>
+<section data-transition="fade">
+  <p>
+    Here’s the truth:
+  </p>
+  <p>
+    NLP is not magic. NLP is a pipeline. A sequence of simple transformations that turn <strong>text → numbers → decisions</strong>.
+  </p>
+  <p>
+    Once you understand the pipeline, every NLP model—old or modern—makes sense.
+  </p>
+</section>
+<!-- Part 0: Title Slide -->
+
+<section data-transition="fade">
+  <p>
+    Let's build NLP systems step by step, from raw text to intelligent behavior.
+  </p>
+</section>
+  <section data-transition="fade">
+  <p>
+    Let's build NLP systems step by step, from raw text to intelligent behavior.
+  </p>
+  <p>
+    No black boxes. No “just trust the model.”
+  </p>
+</section>
+<section data-transition="fade">
+  <p>
+    Let's build NLP systems step by step, from raw text to intelligent behavior.
+  </p>
+  <p>
+    No black boxes. No “just trust the model.”
+  </p>
+  <p>
+    Let’s begin.
+  </p>
+</section>
+
+<!-- Slide 2: The Core Problem -->
+<!-- Part 1: The Core Problem of NLP -->
+ <section data-transition="fade">
+  <h2 class="r-fit-text">Part 1: The Core Problem of NLP</h2>
+  </section>
+  <section data-transition="fade">
+  <h2 class="r-fit-text">Part 1: The Core Problem of NLP</h2>
+  <p style="font-size:1.5em; color:#dd3636;">
+    The Fundamental Issue
+  </p>
+  </section>
+  <section data-transition="fade">
+  <h2 class="r-fit-text">Part 1: The Core Problem of NLP</h2>
+  <p style="font-size:1.5em; color:#dd3636;">
+    The Fundamental Issue
+  </p>
   <p style="font-size:1.5em;">
-    Computers see:
+    Humans see this sentence:
+  </p>
+  <blockquote style="font-size:1.5em; color:#dd3636;">
+    “I love cats”
+  </blockquote>
+  </section>
+  <section data-transition="fade">
+  <h2 class="r-fit-text">Part 1: The Core Problem of NLP</h2>
+  <p style="font-size:1.5em; color:#dd3636;">
+    The Fundamental Issue
+  </p>
+  <p style="font-size:1.5em;">
+    Humans see this sentence:
+  </p>
+  <blockquote style="font-size:1.5em; color:#dd3636;">
+    “I love cats”
+  </blockquote>
+  <p style="font-size:1.5em;">
+    Computers see this:
+  </p>
+  <pre style="font-size:1.5em;">
+"I", " ", "l", "o", "v", "e", " ", "c", "a", "t", "s"
+  </pre>
+  </section>
+  <section data-transition="fade">
+  <h2 class="r-fit-text">Part 1: The Core Problem of NLP</h2>
+  <p style="font-size:1.5em; color:#dd3636;">
+    The Fundamental Issue
+  </p>
+  <p style="font-size:1.5em;">
+    Humans see this sentence:
+  </p>
+  <blockquote style="font-size:1.5em; color:#dd3636;">
+    “I love cats”
+  </blockquote>
+  <p style="font-size:1.5em;">
+    Computers see this:
   </p>
   <pre style="font-size:1.5em;">
 "I", " ", "l", "o", "v", "e", " ", "c", "a", "t", "s"
@@ -65,37 +218,212 @@
   <p style="font-size:1.5em; color:#4CAF50;">
     There is no meaning. Only symbols.
   </p>
+  </section>
+ <section data-transition="fade">
+  <p style="font-size:1.5em; color:#dd3636;">
+    So NLP always begins with the same question:
+  </p>
+  </section>
+ <section data-transition="fade">
+  <p style="font-size:1.5em; color:#dd3636;">
+    So NLP always begins with the same question:
+  </p>
+  <p style="font-size:1.5em; font-weight:bold;">
+    How do we turn language into numbers that preserve meaning?
+  </p>
 </section>
+ <section data-transition="slide">
+ <p style="font-size:1.5em; color:#dd3636;">
+    That question defines the entire NLP pipeline.
+  </p>
+  </section>
+
 
 <!-- Slide 3: Tokenization -->
+<!-- Part 2: Tokenization -->
+ <section data-transition="fade">
+  <h2 class="r-fit-text">Part 2: Tokenization</h2>
+  </section>
+  <section data-transition="fade">
+  <h2 class="r-fit-text">Part 2: Tokenization</h2>
+  <p style="font-size:1.5em;">
+    THE FIRST STEP OF EVERY NLP PIPELINE
+  </p>
+  </section>
+  <section data-transition="fade">
+  <h2 class="r-fit-text">Part 2: Tokenization</h2>
+  <p style="font-size:1.5em;">
+    THE FIRST STEP OF EVERY NLP PIPELINE
+  </p>
+  <p style="font-size:1.5em; color:#dd3636;">
+    <strong>Raw Text → Tokens</strong>
+  </p>
+  </section>
 <section data-transition="fade">
   <h2 class="r-fit-text">Part 2: Tokenization</h2>
-  <p style="font-size:1.5em;">Breaking text into atomic pieces:</p>
-  <pre style="font-size:1.5em;">
-"I love neural networks"
-
-Word-based:    ["I", "love", "neural", "networks"]
-Subword-based: ["I", "love", "neur", "al", "network", "s"]
-Character:     ["I"," ","l","o","v","e",...]
-  </pre>
-  <p style="font-size:1.5em; color:#4CAF50;">
-    Subwords solve unknown words + vocabulary explosion.
+  <p style="font-size:1.5em;">
+    THE FIRST STEP OF EVERY NLP PIPELINE
+  </p>
+  <p style="font-size:1.5em; color:#dd3636;">
+    <strong>Raw Text → Tokens</strong>
   </p>
 </section>
 
-<!-- Slide 4: Vocabulary & IDs -->
 <section data-transition="fade">
+<p style="font-size:1.5em;">
+    <strong>Why <span style="color:#dd3636;""> Tokenize? </span> </strong><br>
+    </p>
+    </section>
+    <section data-transition="fade">
+<p style="font-size:1.5em;">
+    <strong>Why <span style="color:#dd3636;""> Tokenize? </span> </strong><br>
+    You cannot process entire paragraphs as one unit. You need atomic pieces.
+  </p>
+  </section>
+
+  <section data-transition="fade">
+  <p style="font-size:1.5em; ">
+    <strong>Example</strong><br>
+    Text:
+  </p>
+  <blockquote style="font-size:1.5em;">
+    "I love neural networks"
+  </blockquote>
+</section>
+<section data-transition="fade">
+  <p style="font-size:1.5em; ">
+    <strong>Example</strong><br>
+    Text:
+  </p>
+  <blockquote style="font-size:1.5em;">
+    "I love neural networks"
+  </blockquote>
+
+  <p style="font-size:1.5em;">
+    Possible tokenizations:
+  </p>
+  </section>
+  <section data-transition="fade">
+  <p style="font-size:1.5em; ">
+    <strong>Example</strong><br>
+    Text:
+  </p>
+  <blockquote style="font-size:1.5em;">
+    "I love neural networks"
+  </blockquote>
+
+  <p style="font-size:1.5em;">
+    Possible tokenizations:
+  </p>
+
+  <ul style="font-size:1.5em;">
+    <li><strong>Word-based:</strong> ["I", "love", "neural", "networks"]</li>
+    <li><strong>Subword-based (modern NLP):</strong> ["I", "love", "neur", "al", "network", "s"]</li>
+    <li><strong>Character-based:</strong> ["I", " ", "l", "o", "v", "e", ...]</li>
+  </ul>
+  </section>
+<section data-transition="fade">
+  <p style="font-size:1.5em; ">
+    <strong>Example</strong><br>
+    Text:
+  </p>
+  <blockquote style="font-size:1.5em;">
+    "I love neural networks"
+  </blockquote>
+
+  <p style="font-size:1.5em;">
+    Possible tokenizations:
+  </p>
+
+  <ul style="font-size:1.5em;">
+    <li><strong>Word-based:</strong> ["I", "love", "neural", "networks"]</li>
+    <li><strong>Subword-based (modern NLP):</strong> ["I", "love", "neur", "al", "network", "s"]</li>
+    <li><strong>Character-based:</strong> ["I", " ", "l", "o", "v", "e", ...]</li>
+  </ul>
+</section>
+<section data-transition="fade">
+<p style="font-size:1.5em; color:#f7d00e;">
+    <strong>Why Subwords Won</strong><br>
+    </p>
+    </section>
+    <section data-transition="fade">
+<p style="font-size:1.5em; color:#f7d00e;">
+    <strong>Why Subwords Won</strong><br>
+    Subwords solve two huge problems:
+  </p>
+</section>
+<section data-transition="fade">
+<p style="font-size:1.5em; color:#f7d00e;">
+    <strong>Why Subwords Won</strong><br>
+    Subwords solve two huge problems:
+  </p>
+
+  <ul style="font-size:1.5em;">
+    <li><strong>Unknown words:</strong> “ChatGPT” → ["Chat", "G", "PT"]</li>
+    <li><strong>Vocabulary explosion:</strong> English has infinite words, finite subwords</li>
+  </ul>
+</section>
+<section data-transition="fade">
+<p style="font-size:1.5em; color:#f7d00e;">
+    <strong>Why Subwords Won</strong><br>
+    Subwords solve two huge problems:
+  </p>
+
+  <ul style="font-size:1.5em;">
+    <li><strong>Unknown words:</strong> “ChatGPT” → ["Chat", "G", "PT"]</li>
+    <li><strong>Vocabulary explosion:</strong> English has infinite words, finite subwords</li>
+  </ul>
+
+  <p style="font-size:1.5em; color:#4CAF50; font-weight:bold;">
+    Every modern NLP system (BERT, GPT, etc.) uses subword tokenization.
+  </p>
+</section>
+
+
+<!-- Slide 4: Vocabulary & IDs -->
+<!-- Part 3: Vocabulary & IDs — Detailed -->
+ <section data-transition="fade">
   <h2 class="r-fit-text">Part 3: Vocabulary & IDs</h2>
-  <p style="font-size:1.5em;">Words → integers:</p>
-  <pre style="font-size:1.5em;">
+</section>
+<section data-transition="fade">
+  <p style="font-size:1.5em; ">
+    <strong>Why models don’t work with strings:</strong><br>
+    Computers and ML models cannot directly process text like 
+    <em>"I love neural networks"</em>. They need <strong>numbers</strong> 
+    as input—vectors, matrices, and tensors.
+  </p>
+</section>
+
+ <section data-transition="fade">
+<p style="font-size:1.5em;  font-weight:bold;">
+    Vocabulary Mapping
+  </p>
+  <p style="font-size:1.2em; ">
+    First, we create a <strong>vocabulary</strong>: a list of all tokens (words/subwords/characters) the model can handle. 
+    Each token is assigned a unique <strong>integer ID</strong>.  
+  </p>
+  <pre style="font-size:1.2em; color:#555;">
 "I"        → 17
 "love"     → 2031
 "neural"   → 9124
 "networks" → 4512
-
-Sentence → [17, 2031, 9124, 4512]
   </pre>
-  <p style="font-size:1.5em; color:#4CAF50;">Zero meaning yet — just numeric IDs.</p>
+
+  <p style="font-size:1.2em; ">
+    Once we have the mapping, we can turn any sentence into a sequence of IDs:
+  </p>
+  <blockquote style="font-size:1.2em; color:#4CAF50; font-weight:bold;">
+    "I love neural networks" → [17, 2031, 9124, 4512]
+  </blockquote>
+
+  <p style="font-size:1.2em;  font-weight:bold;">
+    Important Notes:
+  </p>
+  <ul style="font-size:1.2em;">
+    <li>At this stage, there is <strong>ZERO meaning</strong> in the numbers.</li>
+    <li>The numbers are simply <strong>IDs</strong>—like barcodes for words.</li>
+    <li>This step bridges raw text → numerical processing.</li>
+  </ul>
 </section>
 
 <!-- Slide 5: Embeddings -->
@@ -109,21 +437,244 @@ Sentence → [17, 2031, 9124, 4512]
     Similar words → close in vector space.
   </p>
 </section>
-
-<!-- Slide 6: Embedding Lookup -->
-<section data-transition="fade">
-  <h2 class="r-fit-text">Embedding Layer = Lookup Table</h2>
-  <pre style="font-size:1.5em;">
-[17, 2031, 9124, 4512]
-↓
-[
-  v("I"),
-  v("love"),
-  v("neural"),
-  v("networks")
-]
-  </pre>
+<section data-auto-animate data-transition="fade">
+  <h2>You’ve heard this sentence everywhere:</h2>
+  <p><em>“Embeddings capture meaning.”</em></p>
+  <p>But what does that even mean?</p>
 </section>
+
+<section data-auto-animate data-transition="fade">
+  <h2>What You’re Told</h2>
+  <ul style="font-size:1.5em;">
+    <li>“Words become vectors”</li>
+    <li>“Similar words are close”</li>
+    <li>“Just use cosine similarity”</li>
+  </ul>
+</section>
+<section data-auto-animate data-transition="fade">
+  <h2>The Real Questions</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>The Real Questions</h2>
+  <ul style="font-size:1.5em;">
+    <li><strong>Why vectors?</strong></li>
+    <li><strong>Why distance?</strong></li>
+    <li><strong>Why does this preserve meaning at all?</strong></li>
+    <li><strong>How are embeddings actually learned?</strong></li>
+  </ul>
+</section>
+
+<section data-auto-animate data-transition="fade">
+  <h2>The Truth</h2>
+  <p><strong>Embeddings are not magic. They are compressed memories of prediction.</strong></p>
+  <p>Once you understand <em>what problem they solve</em> and <em>how they’re trained</em>, embeddings become obvious.  We will rebuild embeddings from scratch. Let’s begin.</p>
+</section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.1: Symbols Have No Meaning</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.1: Symbols Have No Meaning</h2>
+  <p>A computer sees:</p>
+  <pre>"dog"</pre>
+  <p>As:</p>
+  <pre>ASCII: [100, 111, 103]</pre>
+  <pre>Token ID: 532</pre>
+  <p>There is <strong>no meaning</strong> here. Embeddings solve:</p>
+  <blockquote>How do we give symbols a geometry that reflects how they’re used?</blockquote>
+</section>
+
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.2: One-Hot Encoding — The Naïve Attempt</h2>
+  </section>
+  
+  <section data-auto-animate data-transition="fade">
+  <h2>Part 4.2: One-Hot Encoding — The Naïve Attempt</h2>
+  <p>Vocabulary:</p>
+  <pre>["dog", "cat", "car", "banana"]</pre>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.2: One-Hot Encoding — The Naïve Attempt</h2>
+  <p>Vocabulary:</p>
+  <pre>["dog", "cat", "car", "banana"]</pre>
+  <p>One-hot vectors:</p>
+  <pre>
+dog    → [1, 0, 0, 0]
+cat    → [0, 1, 0, 0]
+car    → [0, 0, 1, 0]
+banana → [0, 0, 0, 1]
+  </pre>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.2: One-Hot Encoding — The Naïve Attempt</h2>
+  <p>Vocabulary:</p>
+  <pre>["dog", "cat", "car", "banana"]</pre>
+  <p>One-hot vectors:</p>
+  <pre>
+dog    → [1, 0, 0, 0]
+cat    → [0, 1, 0, 0]
+car    → [0, 0, 1, 0]
+banana → [0, 0, 0, 1]
+  </pre>
+  <p>Why this fails:</p>
+  <ul style="font-size:1.5em;">
+    <li>Every word is equally distant</li>
+    <li>No similarity structure</li>
+    <li>Dimensionality explodes</li>
+  </ul>
+</section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.3: Meaning Comes From Context</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.3: Meaning Comes From Context</h2>
+  <p>“You shall know a word by the company it keeps.” — Firth</p>
+  <ul style="font-size:1.5em;">
+    <li>dog ≈ cat</li>
+    <li>bark ≠ slept</li>
+    <li>mouse ≈ ball</li>
+  </ul>
+  <p>Meaning emerges from patterns of co-occurrence.</p>
+</section>
+
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.4: From Context to Prediction</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.4: From Context to Prediction</h2>
+  <p>Embeddings are trained to <strong>predict</strong>. Example (Skip-Gram):</p>
+  <pre>
+Input: "neural"
+Targets: ["love", "networks"]
+  </pre>
+  <p>The model asks: “If I know this word, what words appear nearby?”</p>
+</section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.5: The Embedding Matrix</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.5: The Embedding Matrix</h2>
+  <pre>E ∈ ℝ^(10000 × 300)</pre>
+  <p>Each row is a learnable embedding vector. It starts random. No meaning yet.</p>
+</section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.6: How Learning Happens</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.6: How Learning Happens</h2>
+  <pre>
+Input word ID
+↓
+Lookup embedding
+↓
+Linear projection
+↓
+Softmax over vocabulary
+↓
+Loss (cross-entropy)
+  </pre>
+  <p>Gradient descent pulls related words closer and pushes unrelated words away. <strong>Distance becomes meaning.</strong></p>
+</section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.7: Geometry = Meaning</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.7: Geometry = Meaning</h2>
+  <p>After training, vectors reflect similarity:</p>
+  <pre>
+dog ── cat
+  \
+   wolf
+king - man + woman ≈ queen
+  </pre>
+  <p>Similar contexts → similar gradients → similar vectors.</p>
+</section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.8: Cosine Similarity</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.8: Cosine Similarity</h2>
+  <p>We compare embeddings using cosine similarity:</p>
+  <pre>cos(θ) = (v · w) / (||v|| ||w||)</pre>
+  <p>Direction encodes meaning, magnitude does not.</p>
+</section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.9: Sentence & Document Embeddings</h2>
+  </section>
+  <section data-auto-animate data-transition="fade">
+  <h2>Part 4.9: Sentence & Document Embeddings</h2>
+  <ul style="font-size:1.5em;">
+    <li>Average word embeddings</li>
+    <li>Use [CLS] token (Transformers)</li>
+    <li>Pooling (mean/max)</li>
+    <li>Dedicated models (SBERT)</li>
+  </ul>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.9: Sentence & Document Embeddings</h2>
+  <ul style="font-size:1.5em;">
+    <li>Average word embeddings</li>
+    <li>Use [CLS] token (Transformers)</li>
+    <li>Pooling (mean/max)</li>
+    <li>Dedicated models (SBERT)</li>
+  </ul>
+  <p>Applications: semantic search, clustering, retrieval, recommendation.</p>
+</section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.10: Embeddings vs Models</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.10: Embeddings vs Models</h2>
+  <table style="font-size:1.5em;">
+    <tr><th>Embeddings</th><th>Models</th></tr>
+    <tr><td>Store meaning</td><td>Compute meaning</td></tr>
+    <tr><td>Fast lookup</td><td>Expensive inference</td></tr>
+    <tr><td>Great for search</td><td>Great for reasoning</td></tr>
+  </table>
+</section>
+
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.11: Size Matters</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.11: Size Matters</h2>
+  <ul style="font-size:1.5em;">
+    <li>Bigger embeddings → capture more nuance</li>
+    <li>Too big → overfitting</li>
+    <li>Too small → loss of nuance</li>
+  </ul>
+  <p>Embeddings are lossy compression of language.</p>
+</section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.12: The Universal Pattern</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>Part 4.12: The Universal Pattern</h2>
+  <pre>
+Symbols
+↓
+Contextual prediction task
+↓
+Gradient descent
+↓
+Geometric structure
+↓
+Similarity search
+  </pre>
+  <p>Works for Word2Vec, GloVe, FastText, BERT, GPT, CLIP, etc.</p>
+</section>
+<section data-auto-animate data-transition="fade">
+  <h2>Conclusion: Embeddings Are Frozen Intelligence</h2>
+  </section>
+<section data-auto-animate data-transition="fade">
+  <h2>Conclusion: Embeddings Are Frozen Intelligence</h2>
+  <ul style="font-size:1.5em;">
+    <li>They don’t think</li>
+    <li>They don’t reason</li>
+    <li>They <strong>remember</strong></li>
+  </ul>
+  <p>Vector databases, semantic search, and RAG systems all make sense once you understand this. You didn’t learn a trick. You learned the geometry of meaning.</p>
+</section>
+
 
 <!-- Slide 7: Positional Information -->
 <section data-transition="fade">
@@ -199,8 +750,8 @@ FOR each batch:
 
 <!-- Slide 13: Inference -->
 <section data-transition="fade">
-  <h2 class="r-fit-text">Part 11: Inference</h2>
-  <pre style="font-size:1.5em;">
+  <h2>Part 11: Inference</h2>
+  <pre style="font-size:1.2em;">
 User text
 ↓
 Tokenize
@@ -221,7 +772,7 @@ Repeat
 
 <!-- Slide 14: Universal NLP Pipeline -->
 <section data-transition="fade">
-  <h2 class="r-fit-text">Part 12: Universal NLP Pipeline</h2>
+  <h2>Part 12: Universal NLP Pipeline</h2>
   <pre style="font-size:1.5em;">
 1. Text preprocessing
 2. Tokenization
@@ -234,7 +785,7 @@ Repeat
 
 <!-- Slide 15: Conclusion -->
 <section data-transition="fade">
-  <h2 class="r-fit-text">Conclusion</h2>
+  <h2 class="">Conclusion</h2>
   <p style="font-size:1.5em; color:#4CAF50;">
     NLP is not magic. LLMs are pipelines scaled massively.
   </p>
@@ -243,7 +794,6 @@ Repeat
     <li>Capture statistical structure</li>
     <li>Predict effectively</li>
   </ul>
-  <h1 class="r-fit-text">Welcome to NLP 🚀</h1>
 </section>
   </div>
     </div>

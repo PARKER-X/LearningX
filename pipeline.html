@@ -734,6 +734,141 @@ Attention(Q,K,V) = softmax(QKᵀ / √d) V
     <li>Language Modeling: Predict next token</li>
   </ul>
 </section>
+<!-- Slide 1: Task Heads Intro -->
+<section data-auto-animate data-transition="fade">
+  <h1 class="">Task Heads — Turning Representations Into Decisions</h1>
+</section>
+
+<!-- Slide 2: Context Before the Head -->
+<section data-auto-animate data-transition="fade">
+  <h1 class="">Before Task Heads</h1>
+  <blockquote style="font-size:2em; color:#4CAF50;">
+    Each token has a contextual vector: shape (batch_size, seq_len, hidden_dim)
+  </blockquote>
+  <p style="font-size:1.5em;">
+    Example: "I love cats" → [h₁("I"), h₂("love"), h₃("cats")]<br>
+    Each hᵢ encodes meaning, role, context, and relations to other words.
+  </p>
+</section>
+
+<!-- Slide 3: Core Principle -->
+<section data-auto-animate data-transition="fade">
+  <h1 class="">Core Principle of Task Heads</h1>
+  <blockquote style="font-size:2em; color:#4CAF50;">
+    A task head is a small neural network that maps contextual vectors → outputs
+  </blockquote>
+  <ul style="font-size: 1.5em;">
+    <li>Usually linear layers + softmax/sigmoid</li>
+    <li>Sometimes CRF or decoders</li>
+    <li>The intelligence is not in the head — it just reads the representation</li>
+  </ul>
+</section>
+
+<!-- Slide 4: Sentence-Level Classification -->
+<section data-auto-animate data-transition="fade">
+  <h1 class="">Sentence-Level Classification</h1>
+  <ul style="font-size:1.5em;">
+    <li>One label per sentence (e.g., sentiment, topic, intent)</li>
+    <li>Use a single vector for the sentence ([CLS] token or mean pooling)</li>
+    <li>Linear → Softmax predicts class probabilities</li>
+  </ul>
+  <blockquote style="font-size:1.8em; color:#4CAF50;">
+    Example: "I love cats" → Positive
+  </blockquote>
+</section>
+
+<!-- Slide 5: Sentence Representation Strategies -->
+<section data-auto-animate data-transition="fade">
+  <h1 class="">Sentence Representation Strategies</h1>
+  <ul style="font-size:1.5em;">
+    <li>[CLS] Token (BERT-style): use h_[CLS]</li>
+    <li>Mean Pooling (GPT-style): sentence_vector = mean(h₁, h₂, h₃)</li>
+  </ul>
+</section>
+
+<!-- Slide 6: Sentence Head Architecture -->
+<section data-auto-animate data-transition="fade">
+  <h1 class="">Sentence Head Architecture</h1>
+  <blockquote style="font-size:1.8em; color:#4CAF50;">
+    sentence_vector → Linear(hidden_dim → num_labels) → Softmax
+  </blockquote>
+  <p style="font-size:1.5em;">
+    Example: h_sentence → [2.3, -1.1] → Softmax → [0.95, 0.05] → Positive
+  </p>
+</section>
+
+<!-- Slide 7: Token-Level Classification -->
+<section data-auto-animate data-transition="fade">
+  <h1 class="">Token-Level Classification</h1>
+  <ul style="font-size:1.5em;">
+    <li>One label per token (NER, POS tagging)</li>
+    <li>Use all token vectors: [h₁, h₂, ..., hₙ]</li>
+    <li>Linear → Softmax per token</li>
+    <li>Optional CRF to enforce valid label transitions</li>
+  </ul>
+  <blockquote style="font-size:1.8em; color:#4CAF50;">
+    Example: "Barack Obama was born in Hawaii" → [PER, PER, O, O, O, LOC]
+  </blockquote>
+</section>
+
+<!-- Slide 8: Token Head Architecture -->
+<section data-auto-animate data-transition="fade">
+  <h1 class="">Token Head Architecture</h1>
+  <blockquote style="font-size:1.8em; color:#4CAF50;">
+    hᵢ → Linear(hidden_dim → num_tags) → Softmax
+  </blockquote>
+  <p style="font-size:1.5em;">
+    Output shape: (batch, seq_len, num_tags)
+  </p>
+</section>
+
+<!-- Slide 9: Sequence-to-Sequence Tasks -->
+<section data-auto-animate data-transition="fade">
+  <h1 class="">Sequence-to-Sequence Tasks</h1>
+  <ul style="font-size:1.5em;">
+    <li>Input sequence → output sequence (translation, summarization)</li>
+    <li>Encoder: maps input → contextual meaning</li>
+    <li>Decoder: predicts next token using encoder context</li>
+    <li>Head = Linear(hidden_dim → vocab_size) → Softmax</li>
+  </ul>
+  <blockquote style="font-size:1.8em; color:#4CAF50;">
+    Example: English → French translation
+  </blockquote>
+</section>
+
+<!-- Slide 10: Language Modeling (GPT) -->
+<section data-auto-animate data-transition="fade">
+  <h1 class="">Language Modeling Head (GPT)</h1>
+  <ul style="font-size:1.5em;">
+    <li>Predict the next token in a sequence</li>
+    <li>Head architecture: h_last → Linear(hidden_dim → vocab_size) → Softmax</li>
+  </ul>
+  <blockquote style="font-size:1.8em; color:#4CAF50;">
+    Example: "I love neural" → predict "networks"
+  </blockquote>
+</section>
+
+<!-- Slide 11: Multi-Task Heads -->
+<section data-auto-animate data-transition="fade">
+  <h1 class="">Multi-Task Heads</h1>
+  <ul style="font-size:1.5em;">
+    <li>One backbone → multiple heads</li>
+    <li>Sentiment, NER, QA, retrieval heads share the same transformer</li>
+    <li>Task-specific linear layers read the same contextual vectors differently</li>
+  </ul>
+  <blockquote style="font-size:1.8em; color:#4CAF50;">
+    Modern NLP models are powerful because they reuse context efficiently.
+  </blockquote>
+</section>
+
+<!-- Slide 12: Key Takeaway -->
+<section data-auto-animate data-transition="fade">
+  <h1 class="">Key Takeaway</h1>
+  <blockquote style="font-size:2em; color:#4CAF50;">
+    Task heads do not “understand” — they simply read learned representations and map them to the correct output.
+  </blockquote>
+</section>
+
 
 <!-- Slide 12: Training -->
 <section data-transition="fade">
@@ -782,6 +917,88 @@ Repeat
 6. Task-specific output
   </pre>
 </section>
+
+
+<!-- Section 1: spaCy Pipeline -->
+<section>
+  <h3>spaCy NLP Pipeline Example</h3>
+  <h4>Code:</h4>
+  <pre>
+import spacy
+from textblob import TextBlob
+
+# Load English model
+nlp = spacy.load("en_core_web_sm")
+
+texts = [
+    "Barack Obama was born in Hawaii.",
+    "I love cats and programming."
+]
+
+for doc in nlp.pipe(texts):
+    print(f"Text: {doc.text}")
+    
+    # POS tagging
+    for token in doc:
+        print(f"{token.text} → {token.pos_}")
+    
+    # Named Entities
+    for ent in doc.ents:
+        print(f"{ent.text} → {ent.label_}")
+    
+    # Dependency Parsing
+    for token in doc:
+        print(f"{token.text} → {token.dep_} → Head: {token.head.text}")
+    
+    # Lemmatization
+    for token in doc:
+        print(f"{token.text} → Lemma: {token.lemma_}")
+    
+    # Sentiment Analysis
+    blob = TextBlob(doc.text)
+    print(f"Polarity: {blob.sentiment.polarity}, Subjectivity: {blob.sentiment.subjectivity}")
+  </pre>
+</section>
+
+<!-- Section 2: Hugging Face Transformers Pipeline -->
+<section>
+  <h3>Hugging Face Transformers Pipeline Example</h3>
+  <h4>Code:</h4>
+  <pre>
+from transformers import pipeline
+
+texts = [
+    "Barack Obama was born in Hawaii.",
+    "I love cats and programming."
+]
+
+# Sentiment Analysis
+sentiment_pipeline = pipeline("sentiment-analysis")
+for text in texts:
+    result = sentiment_pipeline(text)
+    print(f"{text} → {result}")
+
+# Named Entity Recognition (NER)
+ner_pipeline = pipeline("ner", grouped_entities=True)
+for text in texts:
+    entities = ner_pipeline(text)
+    print(f"{text} → {entities}")
+
+# Question Answering
+qa_pipeline = pipeline("question-answering")
+context = "Barack Obama was born in Hawaii and was the 44th president of the USA."
+question = "Where was Barack Obama born?"
+answer = qa_pipeline(question=question, context=context)
+print(f"Q: {question} → A: {answer['answer']}")
+
+# Summarization
+summarizer = pipeline("summarization")
+article = "Hugging Face Transformers provide state-of-the-art models for NLP tasks..."
+summary = summarizer(article, max_length=50, min_length=25, do_sample=False)
+print(summary[0]['summary_text'])
+  </pre>
+</section>
+
 
 <!-- Slide 15: Conclusion -->
 <section data-transition="fade">
